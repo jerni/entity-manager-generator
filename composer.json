@@ -1,0 +1,24 @@
+{
+    "name": "jerni/entity-manager-generator",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Bundle Entity Manager Generator Extension",
+    "keywords": ["symfony2", "entity", "manager", "entity manager"],
+    "homepage": "https://github.com/jerni/entity-manager-generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jse",
+            "email": "ernijosephstalin@gmail.com",
+            "homepage": "http://jsmierni.com/"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "autoload": {
+        "psr-4": { "Jse\\EMGeneratorBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "v1.0.x-dev"
+        }
+    }
+}

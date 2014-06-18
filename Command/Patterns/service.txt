@@ -1,0 +1,6 @@
+<service id="{bundlename}.{entitynamevar}.entity.manager" class="%{bundlename}.{entitynamevar}.class.entity.manager%">
+	<argument type="service" id="doctrine.orm.default_entity_manager" />
+	<argument>%{bundlename}.{entitynamevar}.class.entity%</argument>
+</service>
+
+<!--service-->

@@ -1,0 +1,80 @@
+<?php
+
+namespace {bundlepath}\Entity\Managers;
+
+use Doctrine\ORM\EntityManager;
+use {bundlepath}\Entity\Interfaces\{entityname}ManagerInterface;
+use {bundlepath}\Entity\{entityname};
+
+class {entityname}Manager implements {entityname}ManagerInterface
+{
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+    
+    /**
+     * @var string;
+     */
+    protected $class;
+
+    /**
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param string                      $class
+     */
+    public function __construct(EntityManager $em, $class)
+    {
+        $this->em    = $em;
+        $this->class = $class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function save({entityname} ${entitynamevar})
+    {
+        $this->em->persist(${entitynamevar});
+        $this->em->flush();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->em->getRepository($this->class)->findOneBy($criteria);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findBy(array $criteria)
+    {
+        return $this->em->getRepository($this->class)->findBy($criteria);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete({entityname} ${entitynamevar})
+    {
+        $this->em->remove(${entitynamevar});
+        $this->em->flush();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function create()
+    {
+        return new $this->class;
+    }
+}

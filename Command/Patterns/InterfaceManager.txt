@@ -1,0 +1,57 @@
+<?php
+
+namespace {bundlepath}\Entity\Interfaces;
+use {bundlepath}\Entity\{entityname};
+
+interface {entityname}ManagerInterface
+{
+    /**
+     * Creates an empty CompanyPosition instance
+     *
+     * @return CompanyPosition
+     */
+    function create();
+
+    /**
+     * Deletes a CompanyPosition
+     *
+     * @param CompanyPosition $companyPosition
+     *
+     * @return void
+     */
+    function delete({entityname} ${entitynamevar});
+
+    /**
+     * Finds one CompanyPosition by the given criteria
+     *
+     * @param array $criteria
+     *
+     * @return CompanyPosition
+     */
+    function findOneBy(array $criteria);
+
+    /**
+     * Finds one CompanyPosition by the given criteria
+     *
+     * @param array $criteria
+     *
+     * @return CompanyPosition
+     */
+    function findBy(array $criteria);
+
+    /**
+     * Returns the CompanyPosition's fully qualified class name
+     *
+     * @return string
+     */
+    function getClass();
+
+    /**
+     * Save a CompanyPosition
+     *
+     * @param CompanyPosition $companyPosition
+     *
+     * @return void
+     */
+    function save({entityname} ${entitynamevar});
+}

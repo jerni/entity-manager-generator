@@ -1,0 +1,7 @@
+<?php
+
+namespace {bundlepath}\Entity\Interfaces;
+
+interface {entityname}Interface
+{
+}
