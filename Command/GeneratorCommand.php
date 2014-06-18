@@ -64,25 +64,6 @@ class GeneratorCommand extends ContainerAwareCommand
 			},
 			false
 		);
-		/* $output->setDecorated(true);
-	
-		$contentManager = $this->getContainer()->get('movent_content.content.entity.manager');
-		$contents = $contentManager->findAll();
-		$output->writeln("\n\rUpdating starts\n\r");
-		$progress = new ProgressBar($output, count($contents));
-		$progress->setFormat('%current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s% %message%');
-		$progress->start();
-		
-		foreach($contents as $content){
-			$content->setShareCount($rate['votes']);
-			$content->setLikeCount($rate['votes']);
-			$contentManager->save($content);
-			$progress->setMessage('updating: '.$content->getTitle());
-			$progress->advance();
-		}
-		$progress->setMessage('');
-		$progress->finish();
-		$output->writeln("\n\r\n\rShares and Likes updated."); */
 	}
 	
 	protected function enterEntity($bundleDir, $namespace, $bundlename){
