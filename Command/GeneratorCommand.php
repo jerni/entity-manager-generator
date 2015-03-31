@@ -51,6 +51,7 @@ class GeneratorCommand extends ContainerAwareCommand
 					if(in_array($answer, $bundleNames)){
 						$bundleDir = $this->getContainer()->get('kernel')->locateResource('@'.$answer);
 						$namespace = str_replace('\\'.$answer,'',$bundles[$answer]);
+                        $answer = str_replace('\\', '_', $namespace);
 						$this->enterEntity($bundleDir, $namespace, $answer);
 					} else {
 						throw new \RuntimeException(
@@ -78,13 +79,34 @@ class GeneratorCommand extends ContainerAwareCommand
 			$output,
 			'Please enter the name of the entity [exit]: ',
 			function ($answer) use ($paths) {
+                $fs = new Filesystem();
 				if($answer){
+                    $interfacePath = $paths['entityPath'].'/Interfaces';
+					$ManagerPath = $paths['entityPath'].'/Managers';
+                
+                    $interfacefile = $interfacePath.'/'.$answer.'Interface.php';
+                    $interfacemanagerfile = $interfacePath.'/'.$answer.'ManagerInterface.php';
+                    $entitymanagerfile = $ManagerPath.'/'.$answer.'Manager.php';
+                    $managerservicefile = $paths['entityPath'].'/../Resources/config/entity_manager.xml';
 					if($answer == 'exit'){
-						echo 'Load "entity_manager.xml" in bundle extension ('.str_replace('Bundle', '', $paths['bundleName']).'Extension.php)';
+                        $toreplace = array('Bundle', '_');
+                        $replacewith = array('', '');
+                        $extension = str_replace($toreplace, $replacewith, $paths['bundleName']);
+                        if($fs->exists($managerservicefile)  != false){
+                            echo 'Load "entity_manager.xml" in bundle extension ('.$extension.'Extension.php)';
+                        }
 						return true;
 					}
+                    
+                    if($fs->exists($interfacefile)  != false or
+                        $fs->exists($interfacemanagerfile)  != false or
+                        $fs->exists($entitymanagerfile)  != false){
+                        throw new \RuntimeException(
+							'Entity Manager File(s) already exists.'
+						);
+                    }
+                    
 					$finder = new Finder();
-					$fs = new Filesystem();
 					$finder->files()->name('*.php');
 					$entityFound = false;
 					foreach ($finder->in($paths['entityPath']) as $file) {
@@ -94,9 +116,6 @@ class GeneratorCommand extends ContainerAwareCommand
 						}
 					}
 					
-					$interfacePath = $paths['entityPath'].'/Interfaces';
-					$ManagerPath = $paths['entityPath'].'/Managers';
-					
 					if($entityFound){
 						if($fs->exists($interfacePath)  == false){
 							$fs->mkdir($interfacePath);
@@ -105,11 +124,6 @@ class GeneratorCommand extends ContainerAwareCommand
 						if($fs->exists($ManagerPath)  == false){
 							$fs->mkdir($ManagerPath);
 						}
-					
-						$interfacefile = $interfacePath.'/'.$answer.'Interface.php';
-						$interfacemanagerfile = $interfacePath.'/'.$answer.'ManagerInterface.php';
-						$entitymanagerfile = $ManagerPath.'/'.$answer.'Manager.php';
-						$managerservicefile = $paths['entityPath'].'/../Resources/config/entity_manager.xml';
 						
 						$interface = file_get_contents(dirname(__FILE__).'/Patterns/Interface.txt');
 						$interfacemanager = file_get_contents(dirname(__FILE__).'/Patterns/InterfaceManager.txt');
